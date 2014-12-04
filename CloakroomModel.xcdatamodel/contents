@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6252" systemVersion="13F34" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="CRApplication" representedClassName="CRApplication" syncable="YES">
+        <attribute name="altered" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="applicationDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="checkedIn" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="femalePlusOne" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isMember" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isOriginal" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="malePlusOne" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="onList" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="processed" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="state" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="unSaved" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="guestlist" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="CRGuestlist" inverseName="applications" inverseEntity="CRGuestlist" syncable="YES"/>
+        <relationship name="member" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="CRMember" inverseName="guestlistApplications" inverseEntity="CRMember" syncable="YES"/>
+    </entity>
+    <entity name="CRBooking" representedClassName="CRBooking" syncable="YES">
+        <attribute name="dismissedNotification" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="female" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="fromTime" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="male" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="minSpend" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="mobileNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="notificationState" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="shouldDeleteOnReturn" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="tableIdentification" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="totalGuests" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="toTime" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="event" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CREvent" inverseName="bookings" inverseEntity="CREvent" syncable="YES"/>
+        <relationship name="host" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CRMember" inverseName="bookingHost" inverseEntity="CRMember" syncable="YES"/>
+        <relationship name="member" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CRMember" inverseName="bookingMember" inverseEntity="CRMember" syncable="YES"/>
+        <relationship name="staff" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CRMember" inverseName="bookingStaff" inverseEntity="CRMember" syncable="YES"/>
+    </entity>
+    <entity name="CREvent" representedClassName="CREvent" syncable="YES">
+        <attribute name="eventDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="bookings" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CRBooking" inverseName="event" inverseEntity="CRBooking" syncable="YES"/>
+        <relationship name="guestlists" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CRGuestlist" inverseName="event" inverseEntity="CRGuestlist" syncable="YES"/>
+        <relationship name="notes" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CRNotes" inverseName="event" inverseEntity="CRNotes" syncable="YES"/>
+        <relationship name="promoters" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CRMember" inverseName="eventPromoter" inverseEntity="CRMember" syncable="YES"/>
+        <relationship name="staff" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CRMember" inverseName="eventStaff" inverseEntity="CRMember" syncable="YES"/>
+        <relationship name="venue" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CRVenue" inverseName="event" inverseEntity="CRVenue" syncable="YES"/>
+        <relationship name="walkIns" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CRWalkIn" inverseName="event" inverseEntity="CRWalkIn" syncable="YES"/>
+    </entity>
+    <entity name="CRGuestlist" representedClassName="CRGuestlist" syncable="YES">
+        <attribute name="dateOfEvent" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="dayBefore" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="guestlistName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="localDateStamp" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="morningOf" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="promoteMessage" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sortListOrder" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="state" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="threeDaysBefore" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <relationship name="applications" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CRApplication" inverseName="guestlist" inverseEntity="CRApplication" syncable="YES"/>
+        <relationship name="event" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CREvent" inverseName="guestlists" inverseEntity="CREvent" syncable="YES"/>
+        <relationship name="memberHost" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CRMember" inverseName="createdGuestlists" inverseEntity="CRMember" syncable="YES"/>
+        <relationship name="shouts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CRShout" inverseName="guestlist" inverseEntity="CRShout" syncable="YES"/>
+        <relationship name="venue" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CRVenue" inverseName="guestlists" inverseEntity="CRVenue" syncable="YES"/>
+    </entity>
+    <entity name="CRMember" representedClassName="CRMember" syncable="YES">
+        <attribute name="alias" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="checkInCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="firstName" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="invites" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="isFemale" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isHost" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isLocalUser" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isStaff" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="memberPhoto" optional="YES" attributeType="Transformable" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="mobileNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="photo" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="photoStatus" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="photoUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="state" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="verifiedMobileNumber" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <relationship name="bookingHost" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CRBooking" inverseName="host" inverseEntity="CRBooking" syncable="YES"/>
+        <relationship name="bookingMember" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CRBooking" inverseName="member" inverseEntity="CRBooking" syncable="YES"/>
+        <relationship name="bookingStaff" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CRBooking" inverseName="staff" inverseEntity="CRBooking" syncable="YES"/>
+        <relationship name="createdGuestlists" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CRGuestlist" inverseName="memberHost" inverseEntity="CRGuestlist" syncable="YES"/>
+        <relationship name="eventPromoter" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CREvent" inverseName="promoters" inverseEntity="CREvent" syncable="YES"/>
+        <relationship name="eventStaff" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CREvent" inverseName="staff" inverseEntity="CREvent" syncable="YES"/>
+        <relationship name="guestlistApplications" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CRApplication" inverseName="member" inverseEntity="CRApplication" syncable="YES"/>
+        <relationship name="linkedMembers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CRMember" inverseName="linkedMembers" inverseEntity="CRMember" syncable="YES"/>
+        <relationship name="venues" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CRVenue" inverseName="hosts" inverseEntity="CRVenue" syncable="YES"/>
+        <relationship name="walkInHost" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CRWalkIn" inverseName="host" inverseEntity="CRWalkIn" syncable="YES"/>
+        <relationship name="walkInMember" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CRWalkIn" inverseName="member" inverseEntity="CRWalkIn" syncable="YES"/>
+        <relationship name="walkInStaff" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CRMember" inverseName="walkInStaff" inverseEntity="CRMember" syncable="YES"/>
+    </entity>
+    <entity name="CRNotes" representedClassName="CRNotes" syncable="YES">
+        <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="event" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CREvent" inverseName="notes" inverseEntity="CREvent" syncable="YES"/>
+    </entity>
+    <entity name="CRShout" representedClassName="CRShout" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shoutDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="shoutMessage" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="state" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="guestlist" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CRGuestlist" inverseName="shouts" inverseEntity="CRGuestlist" syncable="YES"/>
+    </entity>
+    <entity name="CRVenue" representedClassName="CRVenue" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="photo" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="photoStatus" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="photoUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="state" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="venueName" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="event" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CREvent" inverseName="venue" inverseEntity="CREvent" syncable="YES"/>
+        <relationship name="guestlists" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CRGuestlist" inverseName="venue" inverseEntity="CRGuestlist" syncable="YES"/>
+        <relationship name="hosts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CRMember" inverseName="venues" inverseEntity="CRMember" syncable="YES"/>
+    </entity>
+    <entity name="CRWalkIn" representedClassName="CRWalkIn" syncable="YES">
+        <attribute name="dismissedNotification" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="entryFee" optional="YES" attributeType="Integer 16" minValueString="0" defaultValueString="0" syncable="YES"/>
+        <attribute name="femaleCount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="maleCount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="notificationState" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="numbersWhoPaid" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="shouldDeleteOnReturn" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <relationship name="event" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CREvent" inverseName="walkIns" inverseEntity="CREvent" syncable="YES"/>
+        <relationship name="host" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CRMember" inverseName="walkInHost" inverseEntity="CRMember" syncable="YES"/>
+        <relationship name="member" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CRMember" inverseName="walkInMember" inverseEntity="CRMember" syncable="YES"/>
+        <relationship name="staff" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CRMember" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="CRApplication" positionX="0" positionY="0" width="128" height="283"/>
+        <element name="CRBooking" positionX="-63" positionY="323" width="128" height="298"/>
+        <element name="CREvent" positionX="-252" positionY="299" width="128" height="178"/>
+        <element name="CRGuestlist" positionX="-407" positionY="0" width="128" height="268"/>
+        <element name="CRMember" positionX="160" positionY="278" width="128" height="493"/>
+        <element name="CRNotes" positionX="169" positionY="150" width="128" height="75"/>
+        <element name="CRShout" positionX="151" positionY="8" width="128" height="118"/>
+        <element name="CRVenue" positionX="-432" positionY="305" width="128" height="193"/>
+        <element name="CRWalkIn" positionX="-171" positionY="0" width="128" height="223"/>
+    </elements>
+</model>
