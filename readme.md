@@ -54,14 +54,14 @@ As I was storing photos which came from photoUrls I also have a CRPhotoService w
 
 All the methods are called from which an NSOperationQueue so as not to lock up the UI. That is, except for the save object to parse which is called from the main queue. 
 
-In a nutshell:
+###In a nutshell:###
 
-		The CRBackgroundFetchHandler stores the NSOperationQueue and adds a subclass of NSOperation to the queue called CRBackgroundFetchOperation. This called the CRParseService which returns the aforementioned JSON using PFCloud. 
+The CRBackgroundFetchHandler stores the NSOperationQueue and adds a subclass of NSOperation to the queue called CRBackgroundFetchOperation. This called the CRParseService which returns the aforementioned JSON using PFCloud. 
 		
-		The results of which are transferred over the CRDataService (one is a single json object with many different relationships and types of relationships) and the other is an array of objects which map to different ids within the original object. I took them out to prevent repetition of data from the server.
+The results of which are transferred over the CRDataService (one is a single json object with many different relationships and types of relationships) and the other is an array of objects which map to different ids within the original object. I took them out to prevent repetition of data from the server.
 		
-		The CRDataService uses dictionary that the cloud function spits out and builds the managed object around it searching for the id (if no id is provided this means that it is trying to save a new object in the saveObjectToParse and the method by which I implement that is stored there)
+The CRDataService uses dictionary that the cloud function spits out and builds the managed object around it searching for the id (if no id is provided this means that it is trying to save a new object in the saveObjectToParse and the method by which I implement that is stored there)
 		
-		The CRManagedObject then builds a lot of the relationships aswell as handles the photos for that object.
+The CRManagedObject then builds a lot of the relationships aswell as handles the photos for that object.
 		
 If you have any questions do please get in touch!
