@@ -63,4 +63,27 @@ The CRDataService uses dictionary that the cloud function spits out and builds t
 		
 The CRManagedObject then builds a lot of the relationships aswell as handles the photos for that object.
 		
+For other relationships that need to be done after the object has been saved on Parse use the cloud code afterSave function e.g.:
+
+
+    var _ = require('cloud/vendor/lodash.compat.min.js');
+    var moment = require('cloud/vendor/moment.js');
+
+    Parse.Cloud.afterSave("CRWalkIn", function (request, response) {
+
+		// get the event pointer
+		
+		var eventPointer = request.object.get("event");
+	
+		if (!_.isUndefined(eventPointer) && !_.isNull(eventPointer)) {
+	
+			// set up the correct pointer here in the classs specific after save methods
+			eventPointer.addUnique("walkIns", request.object);
+	 
+			eventPointer.save();
+	
+		}
+
+    });
+		
 If you have any questions do please get in touch!
