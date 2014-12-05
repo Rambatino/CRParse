@@ -17,24 +17,23 @@ There are a two categories one on the NSArray and one on the NSMutableDictionary
 
 The JSON (and by extension therefore as a result of deserializing on Parse's behalf) must be similar to:
 
-			{
-  				id : kBZlL299JT,
-  				class : CRExample
-  				toManyRelation: [
-                    {
-            
+    {
+  	  id : kBZlL299JT,
+  	  class : CRExamplec
+  	  toManyRelation: [{
+            	id : kB784k59JT,
+  		        class : CRAnotherExample
+                ...
                     },
-                    {
-
-
-                    }
-                ],
-  				toOneRelation : {
-
-                  }
-				classSpecificProperty: true
-
-				}
+                    ...
+               ],
+  	  toOneRelation : {
+            	id : kf784k5lJh,
+  		        class : CRADifferentExample
+                  },
+	  classSpecificProperty: true,
+	  classSpecificProperty: "TeeTo"
+	}
 
 * the name of the local managed object class, this is used to fetch the local managed object or create a new one and is stripped from the keys. Make this the same on parse and locally to make things super easy.
 * The to many relation must also be an array of jsons containing the class name and the id of the object on parse
