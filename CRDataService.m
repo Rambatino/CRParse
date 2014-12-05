@@ -37,15 +37,19 @@
     // even though you have a managed object here, it is not in sync with the persistent store coordinator
     
     // create the context
-    NSManagedObjectContext *context = [CRCoreDataStore newPrivateQueueContext];
+    NSManagedObjectContext * context = [CRCoreDataStore newMainQueueContext];
     
-    NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithPropertiesOfParseObject:parseObject];
+    NSMutableDictionary * dictionary = [NSMutableDictionary dictionaryWithPropertiesOfParseObject:parseObject];
     
-    NSLog(@"dictionary = %@", dictionary);
+    NSManagedObjectID * managedObjectID = [self addObject:dictionary toContext:context withClassName:dictionary[@"class"]];
     
-    NSManagedObject * managedObject = [self addObject:dictionary toContext:context withClassName:dictionary[@"class"]];
-    
-    // somehow save this to the cache????
+    // save the context
+    [self saveContext:context withCompletion:^(NSError *error) {
+        
+        // fire off the save notification when the parent cotext (default) now has the data
+        [CRNotificationService newActivity];
+        
+    }];
     
     [parseObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
          
@@ -55,10 +59,20 @@
              NSLog(@"An error has occured: %@ {%s}", error.userInfo, __PRETTY_FUNCTION__);
              
          } else {
+             // create new context
+             NSManagedObjectContext * inBlockContext = [CRCoreDataStore newMainQueueContext];
              
-             // succesful save on the parse server can now retrieve the correct object and set its id
-             [self saveIdentification:parseObject.objectId toObject:managedObject inContext:context];
+             // fetch the object
+             NSManagedObject * managedObject = [inBlockContext objectWithID:managedObjectID];
              
+             // determine whether that object is to be deleted
+             if ([[context valueForKey:@"toBeDeleted"] boolValue]) {
+                 
+                 // succesful save on the parse server can now retrieve the correct object and set its id
+                 [self saveIdentification:parseObject.objectId toObject:managedObject inContext:context];
+                 
+             }
+            
          }
          
          // call the completion handler
@@ -71,7 +85,7 @@
 + (void) saveObject:(NSDictionary*) object {
 
     // managed object context
-    NSManagedObjectContext *context = [CRCoreDataStore defaultPrivateQueueContext];
+    NSManagedObjectContext *context = [CRCoreDataStore newPrivateQueueContext];
     
     [self addObject:object toContext:context withClassName:object[@"class"]];
     
@@ -82,7 +96,7 @@
 + (void) saveArrayOfObjects:(NSArray*) arrayOfDictionaries {
     
     // managed object context
-    NSManagedObjectContext *context = [CRCoreDataStore defaultPrivateQueueContext];
+    NSManagedObjectContext *context = [CRCoreDataStore newPrivateQueueContext];
     
     NSInteger count = arrayOfDictionaries.count;
     
@@ -99,7 +113,7 @@
 
 // Private
 
-+ (NSManagedObject*) addObject:(NSDictionary*) object toContext:(NSManagedObjectContext*) context withClassName:(NSString*) className {
++ (NSManagedObjectID*) addObject:(NSDictionary*) object toContext:(NSManagedObjectContext*) context withClassName:(NSString*) className {
     
     // must check if the object already exists on the system, if not then add it
     NSAssert1(object[@"id"] || object[@"eventId"], @"Object must contain an id or an event id in which to search against with object %@", object);
@@ -230,7 +244,10 @@
         
         [context insertObject:newObject];
 
-        return newObject;
+        // need to set the permananet id so that it can be fetched after the parse object save
+        [context obtainPermanentIDsForObjects:@[newObject] error:nil];
+        
+        return newObject.objectID;
         
     } else {
         
@@ -239,7 +256,7 @@
         
         assignPropertyValues(object, oldObject);
         
-        return oldObject;
+        return oldObject.objectID;
     }
 
 }
@@ -289,7 +306,7 @@
     
     [self saveContext:context withCompletion:^(NSError *error) {
        
-        [self saveContext:context.parentContext withCompletion:nil];
+//        [self saveContext:context.parentContext withCompletion:nil];
 
     }];
 }
@@ -306,8 +323,22 @@
 
         }];
     } else {
+        
         NSLog(@"It does not have any changes :s");
+        
     }
+    
+}
+
++ (void) saveToDisk {
+    
+    NSManagedObjectContext *parentContext = [CRCoreDataStore defaultPrivateQueueContext].parentContext;
+    
+    [self saveContext:parentContext withCompletion:^(NSError *error) {
+       
+        NSLog(@"The parent context has been saved and therefore the changes have been commited to idisk");
+        
+    }];
     
 }
 

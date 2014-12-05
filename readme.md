@@ -13,7 +13,7 @@ There exists a CRManagedObject which all the other managed objects inherit from,
 
 Each ManagedObject (MO) must have an id with which will associated with the objectId from parse.
 
-There are a two categories one on the NSArray and one on the NSMutableDictionary (although the NSArray one uses the new method on the NSDictionary) which strips the properties and values off of the ManagedObjects and the ParseObject (not a subclass of parse) and converts it into values and keys to be saved either locally or on Parse.
+There are a two categories one on the NSArray and one on the NSMutableDictionary (although the NSArray one uses the new method on the NSDictionary) which strips the properties and values off of the ManagedObjects and the ParseObject (not a subclass of parse object although it uses the parseClassName property to get access to that property list so the parse objects need to be subclassed locally) and converts it into values and keys to be saved either locally or on Parse.
 
 The JSON (and by extension therefore as a result of deserializing on Parse's behalf) must be similar to:
 

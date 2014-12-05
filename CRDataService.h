@@ -31,4 +31,7 @@
 // extract data from graph with format
 + (NSArray*) returnArrayOfFormattedObjectsForClass:(NSString*) className thatMatchPredicate:(NSPredicate*) predicate;
 
+// save the context to disk
++ (void) saveToDisk;
+
 @end

@@ -39,6 +39,9 @@
                 
                 NSLog(@"Time to save venue data = %f", [[NSDate date]timeIntervalSinceDate:date]);
                 
+                // post notification that new data has arrived
+                [CRNotificationService freshServerData];
+                
             }
         
         }];
