@@ -191,10 +191,11 @@
                 // find the managed object context
                 NSArray *array = createFetchRequest(obj[@"id"], obj[@"class"]);
                 
+                __block NSManagedObject *newObject;
                 // save it
                 if (array.count == 0) {
                     
-                    __block NSManagedObject *newObject = [NSEntityDescription
+                    newObject = [NSEntityDescription
                                                           insertNewObjectForEntityForName:obj[@"class"]
                                                           inManagedObjectContext:context];
                     
@@ -205,13 +206,14 @@
                 } else {
                     
                     // Must update the object with new information
-                    __block NSManagedObject *oldObject = array.firstObject;
+                    newObject = array.firstObject;
                     
-                    assignPropertyValues(obj, oldObject);
+                    assignPropertyValues(obj, newObject);
                                         
                 }
                 
-                
+                     [object setValue:newObject forKey:key];
+
             } else {
                 
                 // the value is core and therfore set it
