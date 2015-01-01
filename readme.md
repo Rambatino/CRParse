@@ -1,7 +1,7 @@
 
 ## CRParse ##
 
-These classes are meant to make interacting with Parse as generic as possible. However, one must have a good understanding of the Objective-C runtime environment and be comfortable with generating JSONS in cloud code that will fit your local schematic as well as KVO and how to handle the different results from incorrect keys and values.  The one thing I have yet to inplement is n:n relationships as I had no need for them, however it won't be hard to add them in.
+These classes are meant to make interacting with Parse as generic as possible. However, one must have a good understanding of the Objective-C runtime environment and be comfortable with generating JSONS in cloud code that will fit your local schematic as well as KVO and how to handle the different results from incorrect keys and values. It supports all relationships (1:1, 1:n and n:n)
 
 ### Clas Hierachry ###
 
